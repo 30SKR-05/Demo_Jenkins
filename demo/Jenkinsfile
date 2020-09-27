@@ -15,11 +15,6 @@ pipeline {
             steps {
                 bat'mvn -f demo/pom.xml test'
             }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
         }
         
         /*stage ('Install Stage') {
@@ -27,5 +22,14 @@ pipeline {
                    bat'mvn -f demo/pom.xml install'
             }
         }*/
+        
+        
+        stage ('Packaging Stage && SonarQube Analysis') {
+            steps {
+                 withSonarQubeEnv('My SonarQube Server') {
+                    bat'mvn -f demo/pom.xml package sonar:sonar'
+                }
+            }
+        }
     }
 }
