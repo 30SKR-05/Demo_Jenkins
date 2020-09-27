@@ -15,12 +15,17 @@ pipeline {
             steps {
                 bat'mvn -f demo/pom.xml test'
             }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
         
-        stage ('Install Stage') {
+        /*stage ('Install Stage') {
             steps {
                    bat'mvn -f demo/pom.xml install'
             }
-        }
+        }*/
     }
 }
