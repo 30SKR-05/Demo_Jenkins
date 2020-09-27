@@ -17,19 +17,19 @@ pipeline {
             }
         }
         
-        /*stage ('Install Stage') {
+        stage ('Install Stage') {
             steps {
                    bat'mvn -f demo/pom.xml install'
             }
-        }*/
+        }
         
         
-        stage ('Packaging Stage && SonarQube Analysis') {
+      /*  stage ('Packaging Stage && SonarQube Analysis') {
             steps {
                  withSonarQubeEnv('My SonarQube Server') {
                     bat'mvn -f demo/pom.xml package sonar:sonar'
                 }
             }
-        }
+        }*/
     }
 }
