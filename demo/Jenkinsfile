@@ -1,28 +1,26 @@
 pipeline {
     agent any
     stages {
-        stage ('Initialize') {
+        stage ('Compile Stage') {
             steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-        }
-
-        stage ('Build') {
-            steps {
-                sh '''
-                	mvn clean
-                	mvn test
-                	mvn package
-                ''' 
-            }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
+                withMaven(maven : 'Maven') {
+                bat'mvn clean compile'
                 }
             }
         }
+        stage ('Testing Stage') {
+            steps {
+                withMaven(maven : 'Maven') {
+                bat'mvn test'
+                }
+            }
+        }
+        stage ('Install Stage') {
+            steps {
+                withMaven(maven : 'Maven') {
+                bat'mvn install'
+                }
+            }
+       }
     }
 }
